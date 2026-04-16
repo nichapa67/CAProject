@@ -48,7 +48,7 @@ function Sidebar({ isOpen, setIsOpen, currentPage, setCurrentPage }) {
 
         <div className="p-6 mt-10">
           <div className="text-pink-500 font-black text-3xl mb-10 text-center tracking-tighter">
-            CA
+            Art List
           </div>
 
           {/* เมนูนำทาง */}

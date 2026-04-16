@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { eventData } from './mockData';
 import StorePage from './StorePage';
 
-export default function BoothMap() {
+export default function BoothMap({ onRequireAuth }) {
   const [selectedDate, setSelectedDate] = useState("2026-05-30");
   const [activeBooth, setActiveBooth] = useState(null);
   
@@ -142,7 +142,7 @@ export default function BoothMap() {
   // หน้าที่ 2: ถ้ามี activeBooth ให้เปิด StorePage
   // ========================================================
   if (activeBooth) {
-    return <StorePage activeBooth={activeBooth} onBack={() => setActiveBooth(null)} />;
+    return <StorePage activeBooth={activeBooth} onBack={() => setActiveBooth(null)} onRequireAuth={onRequireAuth}/>;
   }
 
   // ========================================================

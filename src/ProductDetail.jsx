@@ -1,10 +1,11 @@
 // ProductDetail.jsx
 import React, { useState } from 'react';
 
-function ProductDetail({ product, onBack }) { 
+// เพิ่ม onRequireAuth เข้ามาในวงเล็บ เพื่อรับฟังก์ชันเช็คการล็อคอินจากหน้าหลัก
+function ProductDetail({ product, onBack, onRequireAuth }) { 
   // 1. ดึงข้อมูลสินค้าที่ส่งมา หรือใช้ค่าเริ่มต้นเผื่อไว้กันพัง
   const currentProduct = product || { 
-    name: "สติกเกอร์", 
+    name: "สติกเกอร์",
     price: 40, 
     images: ["https://placehold.co/600x600/fbcfe8/ec4899?text=Product"],
     variations: []
@@ -26,23 +27,17 @@ function ProductDetail({ product, onBack }) {
     if (type === 'increase' && quantity < displayStock) setQuantity(q => q + 1);
   };
 
-  // 5. โครงสร้าง UI (มี return เดียวแล้ว)
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 max-w-5xl mx-auto">
       
-      {/* ====================================
-          ปุ่มย้อนกลับ (จัดให้อยู่ด้านบนสุดของกล่อง)
-          ==================================== */}
+      {/* ปุ่มย้อนกลับ */}
       <button 
         onClick={onBack}
         className="mb-6 flex items-center text-gray-500 hover:text-pink-500 font-bold transition"
       >
-        <span className="mr-2">←</span> กลับไปหน้าร้านค้า
+        <span className="mr-2">←</span>กลับไปหน้าร้านค้า
       </button>
 
-      {/* ====================================
-          ส่วนเนื้อหา แบ่งเป็น 2 ฝั่ง ซ้าย/ขวา
-          ==================================== */}
       <div className="flex flex-col md:flex-row gap-8">
         
         {/* ฝั่งซ้าย: รูปภาพ */}
@@ -71,7 +66,7 @@ function ProductDetail({ product, onBack }) {
           {/* ตัวเลือกสินค้า (Variations) */}
           {currentProduct.variations && currentProduct.variations.length > 0 && (
             <div className="mt-6 flex flex-col gap-2">
-              <span className="text-gray-500 font-medium">ตัวเลือก ({currentProduct.variations.length} แบบ):</span>
+              <span className="text-gray-500 font-medium">ตัวเลือก ({currentProduct.variations.length}แบบ):</span>
               <div className="flex flex-wrap gap-2">
                 {currentProduct.variations.map((v) => (
                   <button
@@ -103,12 +98,18 @@ function ProductDetail({ product, onBack }) {
             </span>
           </div>
 
-          {/* ปุ่มกด */}
+          {/* ปุ่มกด Reserved & Add to cart (ใส่ฟังก์ชัน onClick แล้ว) */}
           <div className="mt-auto pt-8 flex gap-4">
-            <button className="flex-1 border-2 border-pink-500 text-pink-500 py-3 rounded-md font-bold hover:bg-pink-50 transition flex items-center justify-center gap-2">
+            <button 
+              onClick={() => onRequireAuth('Reserve Item')} 
+              className="flex-1 border-2 border-pink-500 text-pink-500 py-3 rounded-md font-bold hover:bg-pink-50 transition flex items-center justify-center gap-2"
+            >
               <span>🔖</span> Reserved item
             </button>
-            <button className="flex-1 bg-pink-500 text-white py-3 rounded-md font-bold hover:bg-pink-600 transition flex items-center justify-center gap-2 shadow-md">
+            <button 
+              onClick={() => onRequireAuth('Add to Cart')} 
+              className="flex-1 bg-pink-500 text-white py-3 rounded-md font-bold hover:bg-pink-600 transition flex items-center justify-center gap-2 shadow-md"
+            >
               <span>🛒</span> Add to cart
             </button>
           </div>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ProductDetail from './ProductDetail'; // 1. อย่าลืม Import เข้ามา
 
-export default function StorePage({ activeBooth, onBack }) {
+export default function StorePage({ activeBooth, onBack, onRequireAuth }) {
   const allCreators = ["ทั้งหมด", activeBooth.mainCreator, ...(activeBooth.coCreators || [])];
   const [selectedCreator, setSelectedCreator] = useState("ทั้งหมด");
   
@@ -18,7 +18,9 @@ export default function StorePage({ activeBooth, onBack }) {
       <ProductDetail 
         product={selectedProduct} 
         // ส่งฟังก์ชันไปให้ ProductDetail เพื่อใช้ทำปุ่ม "ย้อนกลับมาร้านค้า"
-        onBack={() => setSelectedProduct(null)} 
+        onBack={() => setSelectedProduct(null)}
+        // ส่งฟังก์ชันไปให้ ProductDetail เพื่อใช้ทำปุ่ม "ย้อนกลับมาร้านค้า"
+        onRequireAuth={onRequireAuth}
       />
     );
   }
